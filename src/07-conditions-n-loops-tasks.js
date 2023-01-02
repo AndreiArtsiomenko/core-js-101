@@ -234,8 +234,8 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return [...str].reverse().join('');
 }
 
 
@@ -251,11 +251,9 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return +[...num.toString()].reverse().join('');
 }
-
-
 /**
  * Validates the CCN (credit card number) and return true if CCN is valid
  * and false otherwise.
@@ -276,8 +274,16 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const arrCCN = [...ccn.toString()].reverse();
+  for (let i = 1; i < arrCCN.length; i += 1) {
+    if (i % 2) {
+      arrCCN[i] *= 2;
+      arrCCN[i] = arrCCN[i].toString().split('').reduce((a, b) => +a + +b, 0);
+    }
+  }
+  const checkDigit = arrCCN.shift();
+  return (arrCCN.reduce((a, b) => +a + +b, 0) + +checkDigit) % 10 === 0;
 }
 
 /**
@@ -294,10 +300,13 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  let result = num;
+  while (result.toString().length !== 1) {
+    result = [...result.toString()].reduce((a, b) => +a + +b, 0);
+  }
+  return result;
 }
-
 
 /**
  * Returns true if the specified string has the balanced brackets and false otherwise.
@@ -345,10 +354,9 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
-
 
 /**
  * Returns the common directory path for specified array of full filenames.
